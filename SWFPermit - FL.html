@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link rel="stylesheet" href="https://js.arcgis.com/4.11/esri/themes/light/main.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="https://js.arcgis.com/4.11/"></script>
+    <script src="appFrontEnd.js"></script>
+    <title>SWF Permit App Prototype</title>
+    <style>
+      html, body, #viewDiv {
+        padding: 10;
+        margin: 10;
+        height: 100%;
+        width: 100%;
+      }
+      #loading {
+        visibility: hidden;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="viewDiv" style="border-width: 10px;">
+      <div style="border:10px solid #3a96e8; min-height:100%; ">
+          <div style="background-color:#3a96e8; padding: 20px 10px 10px 10px;"><img alt="Arlington County logo" src="https://d1rn8z435cu2eh.cloudfront.net/img/bottom-arlington-logo-white.svg" class="logo" width="140" height="70"></div>
+          <div style="padding: 10px 10px 10px 10px; overflow-y: scroll; min-height:100%">
+        <h2 style="color:#717171; font-family:'PT Sans', sans-serif; font-weight:700">Small Cell Facilities Permit Application</h2>
+      <form>
+        <div class="form-group">
+            <label for="firstname">First Name:</label>
+            <input type="text" class="form-control" id="firstname">
+          </div>
+          <div class="form-group">
+            <label for="lastname">Last Name:</label>
+            <input type="text" class="form-control" id="lastname">
+          </div>
+          <div class="form-group">
+              <label for="email">Email:</label>
+              <input type="email" class="form-control" id="email">
+            </div>
+        <div class="form-group">
+          <label for="poleSelect">Select Pole:</label>
+          <select class="form-control" id="poleSelect" >
+            <option> </option>  
+          </select>
+        </div>
+        <table id="tbl"></table>
+        <img
+      id="loading"
+      src="https://developers.arcgis.com/javascript/latest/sample-code/tasks-find/live/ajax-loader.gif"
+    />
+        <br>
+        <br>
+      <button type="button" class="btn btn-primary" id="Btn">Submit</button>
+      </form>
+    </div>
+    </div> 
+  </div>
+  </body>
+</html>

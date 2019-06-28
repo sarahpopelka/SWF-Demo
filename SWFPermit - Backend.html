@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link rel="stylesheet" href="https://js.arcgis.com/4.11/esri/themes/light/main.css">
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+
+    <!-- Popper JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="https://js.arcgis.com/4.11/"></script>
+    <script src="appBackEnd.js"></script>
+    <title>SWF Permit App Backend</title>
+    <style>
+      html, body, #viewDiv {
+        padding: 10;
+        margin: 10;
+        height: 100%;
+        width: 100%;
+      }
+      #loading {
+        visibility: hidden;
+      }
+    </style>
+  </head>
+  <body>
+    
+    <div id="viewDiv" style="border-width: 10px">
+        <div style="background-color:#3a96e8;  padding: 10px 10px 10px 10px;"><img alt="Arlington County logo" src="https://d1rn8z435cu2eh.cloudfront.net/img/bottom-arlington-logo-white.svg" class="logo" width="140" height="70"></div>
+        <div style=" padding: 10px 10px 10px 10px;"><h2 style="color:#717171; font-family:'PT Sans', sans-serif; font-weight:700">Small Cell Facilities Permit Application Staging Area</h2></div>
+        <div class="container-fluid float-left">
+        <div class="row">
+        <div class="table-responsive col-6 float-left" style="height:500px; overflow-y: scroll;" >
+          <table class="table table-hover table-bordered" id="poleTable">
+            <tr>
+              <th>PoleID</th>
+              <th>FirstName</th>
+              <th>LastName</th>
+              <th>Email</th>
+              <th>Date</th>
+            </tr>
+          </table></div>
+          <div class="table-responsive col-5" style="border:1px solid rgb(44, 44, 44); margin: 0px 0px 0px 5%">
+            <table class= "table" id="appTable">
+              <tr id="headerrow">
+                <th id="pID"> <h5 style="color:#717171; font-family:'PT Sans',sans-serif; font-weight:500">Application for Pole: </h5></th>
+                <th id="edit_ID"><h5 style="color:#717171; font-family:'PT Sans',sans-serif; font-weight:600" id="edit_pID"></h5></th>
+              </tr>
+              <tr id="name">
+                <th id="FN">First Name:</th>
+                <td id="edit_FN"></td>
+              </tr>
+              <tr id="lname">
+                  <th id="LN">Last Name:</th>
+                  <td id="edit_LN"></td>
+                </tr>
+                <tr id="email">
+                    <th id="FN">Email:</th>
+                    <td id="edit_email"></td>
+                  </tr>
+                  <tr id="date">
+                      <th id="Date">Date:</th>
+                      <td id="edit_Date"></td>
+                    </tr>
+            </table>
+            <div style="padding: 10px 10px 10px 10px;">
+            <button type="button" class="btn btn-danger" id="Btn-delete">Delete</button> <button type="button" class="btn btn-warning" id="Btn-edit">Edit</button> <button type="button" class="btn btn-success" id="Btn-Cartegraph">Send to Cartegraph</button></div>
+          </div>
+        </div>
+        </div>
+        <img
+      id="loading"
+      src="https://developers.arcgis.com/javascript/latest/sample-code/tasks-find/live/ajax-loader.gif"
+    />
+        <br>
+        <br>
+        <div style="padding: 10px 10px 10px 10px;">
+        <button type="button" class="btn btn-primary" id="Btn-export">Export to CSV</button></div>
+      </form>
+    </div> 
+    <div>
+         </div>
+    
+  </body>
+</html>
