@@ -209,7 +209,7 @@ index: 2
               );
           });
       view.popup.title=document.getElementById("poleSelect").value
-      view.popup.content="<b>Status:</b> "+status+"<br><b>Height:</b> "+height+"<br><b>Type:</b> "+type+"<br>"
+      view.popup.content="<p style='font-size:14px'><b>Status:</b> "+status+"<br><b>Height:</b> "+height+"<br><b>Type:</b> "+type+"<br></p>"
       view.goTo({center:geom, zoom:25});
 
       loadingImg.style.visibility = "hidden";
