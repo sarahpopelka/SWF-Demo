@@ -11,6 +11,8 @@ require([
     "esri/Graphic"
   ], function(Map, MapView, FeatureLayer, UniqueValueRenderer, Query,QueryTask,SpatialReference,Point, Search, Graphic) {
 
+    document.getElementById("AppBody").style.visibility='hidden';
+
   var map = new Map({
     basemap: "streets-navigation-vector"
   });
@@ -260,24 +262,65 @@ index: 2
         "email":document.getElementById("email").value,
         "dateSubmitted":objToday
     }});
+    var attachmentForm = document.getElementById("plan")
+    console.log(attachmentForm);
+    const formData= new FormData(attachmentForm);
+    formData.append("f","json");
+      //const form = new FormData();
+      //form.set("attachment", file);
+      //form.append("f","json")
+      //var form = document.getElementById("myForm");
+
     makeUnavailable();
     console.log({addFeatures:[addfeats]});
     appsLayer
       .applyEdits({addFeatures:[addfeats]})
-      .then(function(editsResult){window.location.replace("success.html")})
+      .then(function(editsResult){
+        var newOID= editsResult.addFeatureResults[0].objectId;
+        addfeats.attributes["OBJECTID"]=newOID;
+        appsLayer
+            .addAttachment(addfeats, formData)
+            .catch(function(error) {
+              console.log("===============================================");
+              console.error(
+                "[ applyEdits ] FAILURE: ",
+                error.code,
+                error.name,
+                error.message
+              );
+              console.log("error = ", error);}); 
+      })
       .catch(function(error) {
-            console.log("===============================================");
-            console.error(
-              "[ applyEdits ] FAILURE: ",
-              error.code,
-              error.name,
-              error.message
-            );
-            console.log("error = ", error);});  
+        console.log("===============================================");
+        console.error(
+          "[ applyEdits ] FAILURE: ",
+          error.code,
+          error.name,
+          error.message
+        );
+        console.log("error = ", error);});  
+      
+      //.then(function(result){window.location.replace("success.html")})
+       
+    };
+
+    function checkMLAs(){
+    var MLAS = ['1','2','3','4','5']
+    mla=document.getElementById("mla").value
+    console.log(MLAS.includes(mla))
+    if (MLAS.includes(mla)){
+      document.getElementById("AppBody").style.visibility='visible';
+      document.getElementById("mla_status").style.visibility='hidden';
+    }
+    else{
+      document.getElementById("AppBody").style.visibility='hidden';
+      document.getElementById("mla_status").style.visibility='visible';
+      document.getElementById("mla_status").innerHTML='<b>Invalid MLA number</b>';
+    }
     };
 
     document.getElementById("poleSelect").addEventListener("change", doFind); 
     document.getElementById("Btn").addEventListener("click", submitApp);
-
+    document.getElementById("mla").addEventListener("change",checkMLAs)
   });
 

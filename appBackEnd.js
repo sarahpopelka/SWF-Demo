@@ -1,8 +1,9 @@
 require([
     "esri/tasks/support/Query",
     "esri/tasks/QueryTask",
-    "esri/layers/FeatureLayer"
-  ], function(Query,QueryTask,FeatureLayer) {
+    "esri/layers/FeatureLayer",
+    "esri/tasks/support/AttachmentQuery"
+  ], function(Query,QueryTask,FeatureLayer,AttachmentQuery) {
 
   var queryTask = new QueryTask({
       url:
@@ -122,6 +123,21 @@ require([
       E.innerHTML=email;
       D.innerHTML=today;
       console.log('click');
+
+      var attachQ = new AttachmentQuery({
+        objectIds:[editObj.attributes["OBJECTID"]]
+      });
+
+      appsLayer
+        .queryAttachments(attachQ)
+        .then(function(result){
+          var url=result[editObj.attributes["OBJECTID"]][0]["url"];
+          document.getElementById("siteplan").href=url;
+        })
+        .catch(rejectedPromise);
+
+      document.getElementById('TEO').value=''
+      document.getElementById('MLASelect').value=''
     }
     document.onload=selectPole()
 /////////////////////////////////////////////////////////////////////////////////////////////////
@@ -243,4 +259,14 @@ return dataarray;
 
 document.getElementById("Btn-export").addEventListener("click", csvButton);
 
+function filterApps(){
+  var appStat=document.getElementById("AppStatus").value
+  if (appStat=="Pending"){
+    document.getElementById("Needed").style.visibility='visible';
+  }
+  else{
+    document.getElementById("Needed").style.visibility='hidden';
+  }
+  };
+  document.getElementById("AppStatus").addEventListener("change", filterApps);
   });
