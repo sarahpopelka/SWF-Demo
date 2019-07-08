@@ -9,6 +9,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <script src="https://js.arcgis.com/4.11/"></script>
+    <script src="https://smtpjs.com/v3/smtp.js"></script>
     <script src="appFrontEnd.js"></script>
     <title>SWF Permit App Prototype</title>
     <style>
@@ -25,11 +26,12 @@
   </head>
   <body>
     <div id="viewDiv" style="border-width: 10px;">
-      <div style="border:10px solid #2e8be8; min-height:100%; ">
-          <div style="background-color:#2e8be8; padding: 20px 10px 10px 10px;"><img alt="Arlington County logo" src="https://d1rn8z435cu2eh.cloudfront.net/img/bottom-arlington-logo-white.svg" class="logo" width="140" height="70"></div>
-          <div style="padding: 10px 10px 10px 10px; overflow-y: scroll; min-height:100%">
+      <div style="border:10px solid #2e8be8; max-height:100%;">
+          <div style="background-color:#2e8be8; padding: 20px 0px 10px 10px;"><img alt="Arlington County logo" src="https://d1rn8z435cu2eh.cloudfront.net/img/bottom-arlington-logo-white.svg" class="logo" width="140" height="70"></div>
+          <div style="padding: 10px 0px 10px 10px;">
         <h2 style="color:#666666; font-family:'PT Sans', sans-serif; font-weight:700">Small Cell Facilities Permit Application</h2>
         <br/>
+        <div style="overflow-y: scroll; max-height: 840px; padding: 0px 10px 0px 0px">
         <form id='AppHead'>
           <div class="form-group">
               <label for="mlaval">Please enter the MLA number associated with your application.</label>
@@ -37,7 +39,7 @@
             </div>
             <div id="mla_status"></div>
           </form>
-          <div id='AppBody'>
+          <div id='AppBody' style="visibility: hidden">
         <form  class="AppBody">
         <div class="form-group">
             <label for="firstname">First Name:</label>
@@ -47,9 +49,41 @@
             <label for="lastname">Last Name:</label>
             <input type="text" class="form-control" id="lastname">
           </div>
-          <div class="form-group">
+            <div class="form-group">
+              <label for="company">Company:</label>
+              <input type="text" class="form-control" id="company">
+            </div>
+            <div class="form-group">
+              <label for="address">Address:</label>
+              <input type="text" class="form-control" id="address">
+            </div>
+            <div class="form-group">
+              <label for="city">City:</label>
+              <input type="text" class="form-control" id="city">
+            </div>
+            <div class="form-group">
+              <label for="state">State:</label>
+              <input type="text" class="form-control" id="state">
+            </div>
+            <div class="form-group">
+              <label for="zip">Postal Code:</label>
+              <input type="number" class="form-control" id="zip">
+            </div>
+            <div class="form-group">
+              <label for="phone">Phone:</label>
+              <input type="text" class="form-control" id="phone">
+            </div>
+            <div class="form-group">
               <label for="email">Email:</label>
               <input type="email" class="form-control" id="email">
+            </div>
+            <div class="form-group">
+              <label for="provider">Wireless Service Provider:</label>
+              <input type="text" class="form-control" id="provider">
+            </div>
+            <div class="form-group">
+              <label for="frequency">Frequency:</label>
+              <input type="number" class="form-control" id="frequency">
             </div>
         <div class="form-group">
           <label for="poleSelect">Select Pole:</label>
@@ -62,18 +96,23 @@
       id="loading"
       src="https://developers.arcgis.com/javascript/latest/sample-code/tasks-find/live/ajax-loader.gif"
     />
+    <div class="form-group">
+      <label for="description">Detailed Description of Work, Activity, or Use of the Public Right-of-Way:</label>
+      <textarea type="text" class="form-control" id="description" style="min-height:200px"></textarea>
+    </div>
         </form>
-        <form id="plan" class="AppBody">
-        <div class="form-group">
+        <form id="plan" class="AppBody" style="visibility:hidden;">
+        <div class="form-group" >
               <label for="plan_attachment">Attach Site Plan:</label>
               <input type="file" class="form-control" name="attachment" >
             </div>
           </form>
+        </div>
             <br>
-            <br>
-          <form class="AppBody">
-      <button type="button" class="btn btn-primary" id="Btn">Submit</button>
+          <form class="AppBody" >
+      <button type="button" class="btn btn-primary" id="Btn" style="visibility:hidden;">Submit</button>
       </form>
+    
       </div>
     </div>
     </div> 

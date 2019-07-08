@@ -12,6 +12,7 @@ require([
 
     var query1 = new Query();
     query1.outFields = ["*"];
+    query1.where = "OBJECTID>0";
 
     var polesLayer = new FeatureLayer({
       url: "https://services9.arcgis.com/9CpmhHxB8FqduRyJ/arcgis/rest/services/Arl_SWF_WFL1/FeatureServer/0"
@@ -25,7 +26,6 @@ require([
 
     function selectPole() {
       // Set the search text to the value of the input box
-      query1.where = "OBJECTID>0";
 
       queryTask
         .execute(query1)
@@ -107,21 +107,37 @@ require([
       appdata=appfeatures;
       editObj=appfeatures[i];
       pID = appfeatures[i].attributes["poleID"];
+      var mla = appfeatures[i].attributes["MLA"];
       var firstname = appfeatures[i].attributes["firstName"];
       var lastname = appfeatures[i].attributes["lastName"];
+      var company = appfeatures[i].attributes["company"];
+      var address = appfeatures[i].attributes["address"] + '<br/>' + appfeatures[i].attributes["city"] + ", " + appfeatures[i].attributes["state"] + " " + appfeatures[i].attributes["zip"];
       var email = appfeatures[i].attributes["email"];
+      var phone = appfeatures[i].attributes["phone"];
+      var provider = appfeatures[i].attributes["provider"];
+      var frequency = appfeatures[i].attributes["frequency"];
+      var description = appfeatures[i].attributes["description"];
       var today= formatDate(new Date(appfeatures[i].attributes["dateSubmitted"]));
+      var TEO = appfeatures[i].attributes["TEO_num"];
+      var REAL = appfeatures[i].attributes["MLA_verify"];
+      var DTS = appfeatures[i].attributes["handhole"];
 
-      var poleID=document.getElementById('edit_pID');
-      var FN=document.getElementById('edit_FN');
-      var LN=document.getElementById('edit_LN');
-      var E=document.getElementById('edit_email');
-      var D=document.getElementById('edit_Date');
-      poleID.innerHTML=pID;
-      FN.innerHTML=firstname;
-      LN.innerHTML=lastname;
-      E.innerHTML=email;
-      D.innerHTML=today;
+      document.getElementById('edit_pID').innerHTML=pID;
+      document.getElementById('edit_MLA').innerHTML=mla;
+      document.getElementById('edit_FN').innerHTML=firstname;
+      document.getElementById('edit_LN').innerHTML=lastname;
+      document.getElementById('edit_co').innerHTML=company;
+      document.getElementById('edit_add').innerHTML=address;
+      document.getElementById('edit_email').innerHTML=email;
+      document.getElementById('edit_phone').innerHTML=phone;
+      document.getElementById('edit_provider').innerHTML=provider;
+      document.getElementById('edit_freq').innerHTML=frequency;
+      document.getElementById('edit_desc').innerHTML=description;
+      document.getElementById('edit_Date').innerHTML=today;
+      document.getElementById('TEO').value=TEO;
+      document.getElementById('MLASelect').value=REAL;
+      document.getElementById('DTS').value=DTS;
+      
       console.log('click');
 
       var attachQ = new AttachmentQuery({
@@ -260,13 +276,24 @@ return dataarray;
 document.getElementById("Btn-export").addEventListener("click", csvButton);
 
 function filterApps(){
-  var appStat=document.getElementById("AppStatus").value
+  var appStat=document.getElementById("AppStatus").value;
+  document.getElementById("poleTable").innerHTML=`<tr>
+  <th>PoleID</th>
+  <th>FirstName</th>
+  <th>LastName</th>
+  <th>Email</th>
+  <th>Date</th>
+</tr>`
+  query1.where="Status = '"+appStat+"'";
+  document.getElementById("Needed").style.visibility='hidden';
   if (appStat=="Pending"){
     document.getElementById("Needed").style.visibility='visible';
   }
-  else{
-    document.getElementById("Needed").style.visibility='hidden';
+  else if (appStat=="All"){
+    query1.where="OBJECTID>0";
   }
+  selectPole()
   };
+
   document.getElementById("AppStatus").addEventListener("change", filterApps);
   });

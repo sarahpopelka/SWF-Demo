@@ -59,7 +59,7 @@
               </div>
             </div>
             </div>
-        <div class="table-responsive col-6 float-left" style="height:500px; overflow-y: scroll;" >
+        <div class="table-responsive col-6 float-left" style="height:700px; overflow-y: scroll;" >
           <table class="table table-hover table-bordered" id="poleTable">
             <tr>
               <th>PoleID</th>
@@ -70,11 +70,19 @@
             </tr>
           </table>
         </div>
-          <div class="table-responsive col-5" style="border:1px solid rgb(44, 44, 44); margin: 0px 0px 0px 5%">
+          <div class="table-responsive col-5" style="border:1px solid rgb(44, 44, 44); margin: 0px 0px 0px 5%; overflow-y: scroll; height:700px">
             <table class= "table" id="appTable">
               <tr id="headerrow">
                 <th id="pID"> <h5 style="color:#717171; font-family:'PT Sans',sans-serif; font-weight:500">Application for Pole: </h5></th>
                 <th id="edit_ID"><h5 style="color:#717171; font-family:'PT Sans',sans-serif; font-weight:600" id="edit_pID"></h5></th>
+              </tr>
+              <tr id="MLA">
+                <th id="MLA">MLA:</th>
+                <td id="edit_MLA"></td>
+              </tr>
+              <tr id="date">
+                <th id="Date">Date:</th>
+                <td id="edit_Date"></td>
               </tr>
               <tr id="name">
                 <th id="FN">First Name:</th>
@@ -84,18 +92,38 @@
                   <th id="LN">Last Name:</th>
                   <td id="edit_LN"></td>
                 </tr>
+                <tr id="company">
+                  <th id="co">Company:</th>
+                  <td id="edit_co"></td>
+                </tr>
+                <tr id="address">
+                  <th id="add">Address:</th>
+                  <td id="edit_add"></td>
+                </tr>
                 <tr id="email">
-                    <th id="FN">Email:</th>
+                    <th id="email">Email:</th>
                     <td id="edit_email"></td>
                   </tr>
-                  <tr id="date">
-                      <th id="Date">Date:</th>
-                      <td id="edit_Date"></td>
-                    </tr>
+                  <tr id="phone">
+                    <th id="phone">Phone:</th>
+                    <td id="edit_phone"></td>
+                  </tr> 
+                  <tr id="provider">
+                    <th id="provider">Provider:</th>
+                    <td id="edit_provider"></td>
+                  </tr>
+                  <tr id="frequency">
+                    <th id="freq">Frequency:</th>
+                    <td id="edit_freq"></td>
+                  </tr>
+                  <tr id="description">
+                    <th id="desc">Description:</th>
+                    <td id="edit_desc"></td>
+                  </tr>
             </table>
-            Site Plan:  <a href="#" id="siteplan" target="_blank"><img src='https://cdn4.iconfinder.com/data/icons/linecon/512/file-512.png' height="25" width="20"></a> <br/><br/>
+            <b>Site Plan:</b>  <a href="#" id="siteplan" target="_blank"><img src='https://cdn4.iconfinder.com/data/icons/linecon/512/file-512.png' height="25" width="22"></a> <br/><br/>
             <div class="form-group">
-                <label for="MLASelect">MLA OK?:</label>
+                <label for="MLASelect"><b>MLA OK?:</b></label>
                 <select class="form-control" id="MLASelect" >
                   <option> </option>
                   <option>Yes</option>  
@@ -103,8 +131,12 @@
                 </select>
               </div>
               <div class="form-group">
-                  <label for="TEO">TE&O Asset #:</label>
+                  <label for="TEO"><b>TE&O Asset #:</b></label>
                   <input type="text" class="form-control" id="TEO">
+                </div>
+                <div class="form-group">
+                  <label for="DTS"><b>Handhole Identifier:</b></label>
+                  <input type="text" class="form-control" id="DTS">
                 </div>
             <div style="padding: 10px 10px 10px 10px;">
             <button type="button" class="btn btn-danger" id="Btn-delete">Reject</button> <button type="button" class="btn btn-warning" id="Btn-edit">Edit</button> <button type="button" class="btn btn-success" id="Btn-Cartegraph">Approve</button></div>
