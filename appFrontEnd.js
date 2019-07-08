@@ -257,6 +257,7 @@ index: 2
         curMeridiem = objToday.getHours() > 12 ? "PM" : "AM";
       var today = curHour + ":" + curMinute + "." + curSeconds + curMeridiem + " " + dayOfWeek + " " + dayOfMonth + " of " + curMonth + ", " + curYear;
       const addfeats=new Graphic({"geometry":geom,"attributes":{
+        "Status":"Pending",
         "MLA":document.getElementById("mla").value,
         "poleID":document.getElementById("poleSelect").value,
         "firstName":document.getElementById("firstname").value,
@@ -272,7 +273,10 @@ index: 2
         "provider":document.getElementById("provider").value,
         "frequency":document.getElementById("frequency").value,
         "description":document.getElementById("description").value,
-        "dateSubmitted":objToday
+        "dateSubmitted":objToday,
+        "MLA_verify":"",
+        "TEO_num":"",
+        "handhole":""
     }});
     var attachmentForm = document.getElementById("plan")
     console.log(attachmentForm);
@@ -288,8 +292,9 @@ index: 2
     appsLayer
       .applyEdits({addFeatures:[addfeats]})
       .then(function(editsResult){
-        console.log(document.getElementById('description').value);
+        console.log(editsResult);
         var newOID= editsResult.addFeatureResults[0].objectId;
+        console.log(newOID)
         addfeats.attributes["OBJECTID"]=newOID;
         appsLayer
             .addAttachment(addfeats, formData)
@@ -349,8 +354,9 @@ index: 2
                 }) */
                 .catch(rejectedPromise);
               
-            })//.then(
-              //window.location.replace("success.html"))
+            })
+            .then(
+              window.location.replace("success.html"))
             
             .catch(function(error) {
               console.log("===============================================");

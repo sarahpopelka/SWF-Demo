@@ -12,7 +12,7 @@ require([
 
     var query1 = new Query();
     query1.outFields = ["*"];
-    query1.where = "OBJECTID>0";
+    query1.where = "Status = 'Pending'";
 
     var polesLayer = new FeatureLayer({
       url: "https://services9.arcgis.com/9CpmhHxB8FqduRyJ/arcgis/rest/services/Arl_SWF_WFL1/FeatureServer/0"
@@ -50,6 +50,24 @@ require([
 
     // Executes when the promise from find.execute() resolves
     function showpoleResults(result) {
+      document.getElementById('edit_pID').innerHTML="Application for Pole: ";
+      document.getElementById('edit_MLA').value="";
+      document.getElementById('edit_FN').value="";
+      document.getElementById('edit_LN').value="";
+      document.getElementById('edit_co').value="";
+      document.getElementById('edit_add').value="";
+      document.getElementById('edit_city').value="";
+      document.getElementById('edit_state').value="";
+      document.getElementById('edit_zip').value="";
+      document.getElementById('edit_email').value="";
+      document.getElementById('edit_phone').value="";
+      document.getElementById('edit_provider').value="";
+      document.getElementById('edit_freq').value="";
+      document.getElementById('edit_desc').value="";
+      document.getElementById('edit_Date').innerHTML="";
+      document.getElementById('TEO').value="";
+      document.getElementById('MLASelect').value="";
+      document.getElementById('DTS').value="";
       var results = result;
       console.log(results)
       // Clear the cells and rows of the table to make room for new results
@@ -111,7 +129,10 @@ require([
       var firstname = appfeatures[i].attributes["firstName"];
       var lastname = appfeatures[i].attributes["lastName"];
       var company = appfeatures[i].attributes["company"];
-      var address = appfeatures[i].attributes["address"] + '<br/>' + appfeatures[i].attributes["city"] + ", " + appfeatures[i].attributes["state"] + " " + appfeatures[i].attributes["zip"];
+      var address = appfeatures[i].attributes["address"];
+      var city = appfeatures[i].attributes["city"];
+      var state = appfeatures[i].attributes["state"];
+      var zip = appfeatures[i].attributes["zip"];
       var email = appfeatures[i].attributes["email"];
       var phone = appfeatures[i].attributes["phone"];
       var provider = appfeatures[i].attributes["provider"];
@@ -122,17 +143,25 @@ require([
       var REAL = appfeatures[i].attributes["MLA_verify"];
       var DTS = appfeatures[i].attributes["handhole"];
 
-      document.getElementById('edit_pID').innerHTML=pID;
-      document.getElementById('edit_MLA').innerHTML=mla;
-      document.getElementById('edit_FN').innerHTML=firstname;
-      document.getElementById('edit_LN').innerHTML=lastname;
-      document.getElementById('edit_co').innerHTML=company;
-      document.getElementById('edit_add').innerHTML=address;
-      document.getElementById('edit_email').innerHTML=email;
-      document.getElementById('edit_phone').innerHTML=phone;
-      document.getElementById('edit_provider').innerHTML=provider;
-      document.getElementById('edit_freq').innerHTML=frequency;
-      document.getElementById('edit_desc').innerHTML=description;
+      document.getElementById('edit_pID').innerHTML="Application for Pole: "+pID;
+      document.getElementById('edit_MLA').value=mla;
+      document.getElementById('edit_FN').value=firstname;
+      document.getElementById('edit_FN').size=firstname.length;
+      document.getElementById('edit_LN').value=lastname;
+      document.getElementById('edit_LN').size=lastname.length;
+      document.getElementById('edit_co').value=company;
+      document.getElementById('edit_add').value=address;
+      document.getElementById('edit_add').size=address.length;
+      document.getElementById('edit_city').value=city;
+      document.getElementById('edit_city').size=city.length;
+      document.getElementById('edit_state').value=state;
+      document.getElementById('edit_state').size=state.length;
+      document.getElementById('edit_zip').value=zip;
+      document.getElementById('edit_email').value=email;
+      document.getElementById('edit_phone').value=phone;
+      document.getElementById('edit_provider').value=provider;
+      document.getElementById('edit_freq').value=frequency;
+      document.getElementById('edit_desc').value=description;
       document.getElementById('edit_Date').innerHTML=today;
       document.getElementById('TEO').value=TEO;
       document.getElementById('MLASelect').value=REAL;
@@ -152,11 +181,45 @@ require([
         })
         .catch(rejectedPromise);
 
-      document.getElementById('TEO').value=''
-      document.getElementById('MLASelect').value=''
+
     }
     document.onload=selectPole()
 /////////////////////////////////////////////////////////////////////////////////////////////////
+function editApp(){
+  console.log("editing");
+      editObj.attributes["MLA"]=document.getElementById('edit_MLA').value;
+      editObj.attributes["firstName"]=document.getElementById('edit_FN').value;
+      editObj.attributes["lastName"]=document.getElementById('edit_LN').value;
+      editObj.attributes["company"]=document.getElementById('edit_co').value;
+      editObj.attributes["address"]=document.getElementById('edit_add').value;
+      editObj.attributes["city"]=document.getElementById('edit_city').value;
+      editObj.attributes["state"]=document.getElementById('edit_state').value;
+      editObj.attributes["zip"]=document.getElementById('edit_zip').value;
+      editObj.attributes["email"]=document.getElementById('edit_email').value;
+      editObj.attributes["phone"]=document.getElementById('edit_phone').value;
+      editObj.attributes["provider"]=document.getElementById('edit_provider').value;
+      editObj.attributes["frequency"]=document.getElementById('edit_freq').value;
+      editObj.attributes["description"]=document.getElementById('edit_desc').value;
+      editObj.attributes["TEO_num"]=document.getElementById('TEO').value;
+      editObj.attributes["MLA_verify"]=document.getElementById('MLASelect').value;
+      editObj.attributes["handhole"]=document.getElementById('DTS').value;
+
+appsLayer
+  .applyEdits({updateFeatures:[editObj]})
+  .then(function(editsResult){console.log(document.getElementById('edit_co').value);
+  console.log(editObj.attributes["company"]);
+  })
+  .catch(function(error) {
+        console.log("===============================================");
+        console.error(
+          "[ applyEdits ] FAILURE: ",
+          error.code,
+          error.name,
+          error.message
+        );
+        console.log("error = ", error);})
+};
+
 function makeAvailable() {
   var queryTask2 = new QueryTask({
     url:
@@ -181,7 +244,7 @@ function makeAvailable() {
   const edits={updateFeatures:[updateObj]};
   polesLayer
     .applyEdits(edits)
-    .then(function(editsResult){window.location.replace("SWFPermit - Backend.html")})
+    //.then(function(editsResult){window.location.replace("SWFPermit - Backend.html")})
     .catch(function(error) {
         console.log("===============================================");
         console.error(
@@ -195,11 +258,12 @@ function makeAvailable() {
     };
 
 function deleteApp(){
-  const deletefeats=editObj;
-  makeAvailable();
-console.log({deleteFeatures:[deletefeats]});
+  editObj.attributes["Status"]="Rejected"
+  const rejectfeats=editObj;
+console.log({updateFeatures:[rejectfeats]});
 appsLayer
-  .applyEdits({deleteFeatures:[deletefeats]})
+  .applyEdits({updateFeatures:[rejectfeats]})
+  .then(function(editsResult){makeAvailable()})
   .catch(function(error) {
         console.log("===============================================");
         console.error(
@@ -211,6 +275,7 @@ appsLayer
         console.log("error = ", error);});  
 };
 document.getElementById("Btn-delete").addEventListener("click", deleteApp);
+document.getElementById("Btn-edit").addEventListener("click", editApp);
 
 function csvButton(){
    exportToCsv('SWFPermitAppExport.csv',convertToCSV(appfeatures))
@@ -287,6 +352,7 @@ function filterApps(){
   query1.where="Status = '"+appStat+"'";
   document.getElementById("Needed").style.visibility='hidden';
   if (appStat=="Pending"){
+    document.getElementById("whatNeeded").value="";
     document.getElementById("Needed").style.visibility='visible';
   }
   else if (appStat=="All"){
@@ -295,5 +361,31 @@ function filterApps(){
   selectPole()
   };
 
+  function filterActs(){
+    var actStat=document.getElementById("whatNeeded").value;
+    document.getElementById("poleTable").innerHTML=`<tr>
+    <th>PoleID</th>
+    <th>FirstName</th>
+    <th>LastName</th>
+    <th>Email</th>
+    <th>Date</th>
+  </tr>`
+    if (actStat!==""){
+    if (actStat=="MLA"){
+      query1.where="Status = 'Pending' AND MLA_verify = ''";
+    }
+    else if (actStat=="TE&O"){
+      query1.where="Status = 'Pending' AND TEO_num = ''";
+    }
+    else if (actStat=="DTS"){
+      query1.where="Status = 'Pending' AND handhole = ''";
+    }
+    else{
+      query1.where="Status = 'Pending' AND handhole NOT LIKE '' AND MLA_verify NOT LIKE '' AND TEO_num NOT LIKE ''";
+    }
+  }
+    selectPole()
+    };
   document.getElementById("AppStatus").addEventListener("change", filterApps);
+  document.getElementById("whatNeeded").addEventListener("change", filterActs);
   });

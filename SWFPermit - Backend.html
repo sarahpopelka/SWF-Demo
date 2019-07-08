@@ -42,20 +42,25 @@
               <div class="form-group col-3">
                 <label for="AppStatus">Filter by Status:</label>
                 <select class="form-control" id="AppStatus" >
-                  <option>All</option>
                   <option>Pending</option>
                   <option>Accepted</option>  
                   <option>Rejected</option>
+                  <option>All</option>
                 </select>
               </div>
-              <div class="form-group col-3" style="visibility:hidden">
+              <div class="form-group col-3" id="Needed">
                 <label for="Needed">Action Needed:</label>
-                <select class="form-control" id="Needed" >
+                <select class="form-control" id="whatNeeded">
                   <option></option>
                   <option>MLA</option>
                   <option>TE&O</option>  
                   <option>DTS</option>
+                  <option>Approve/Reject</option>
                 </select>
+              </div>
+              
+              <div class="col-5" style="margin: 0px 0px 0px 5%;">
+              </br></br><h5 style="color:#717171; font-family:'PT Sans',sans-serif; font-weight:500" id="edit_pID"></h5>
               </div>
             </div>
             </div>
@@ -72,62 +77,54 @@
         </div>
           <div class="table-responsive col-5" style="border:1px solid rgb(44, 44, 44); margin: 0px 0px 0px 5%; overflow-y: scroll; height:700px">
             <table class= "table" id="appTable">
-              <tr id="headerrow">
-                <th id="pID"> <h5 style="color:#717171; font-family:'PT Sans',sans-serif; font-weight:500">Application for Pole: </h5></th>
-                <th id="edit_ID"><h5 style="color:#717171; font-family:'PT Sans',sans-serif; font-weight:600" id="edit_pID"></h5></th>
-              </tr>
               <tr id="MLA">
                 <th id="MLA">MLA:</th>
-                <td id="edit_MLA"></td>
+                <td><input id="edit_MLA" type="text" style="border: white"></td>
               </tr>
               <tr id="date">
                 <th id="Date">Date:</th>
                 <td id="edit_Date"></td>
               </tr>
               <tr id="name">
-                <th id="FN">First Name:</th>
-                <td id="edit_FN"></td>
+                <th id="FN">Name:</th>
+                <td ><input id="edit_FN" type="text" style="border: white"> <input id="edit_LN" type="text" style="border: white"></td>
               </tr>
-              <tr id="lname">
-                  <th id="LN">Last Name:</th>
-                  <td id="edit_LN"></td>
-                </tr>
                 <tr id="company">
                   <th id="co">Company:</th>
-                  <td id="edit_co"></td>
+                  <td ><input id="edit_co" type="text" style="border: white"></td>
                 </tr>
                 <tr id="address">
                   <th id="add">Address:</th>
-                  <td id="edit_add"></td>
+                  <td ><input id="edit_add" type="text" style="border: white"><br/><input id="edit_city" type="text" style="border: white">, <input id="edit_state" type="text" style="border: white"> <input id="edit_zip" type="text" style="border: white" size="5"></td>
                 </tr>
                 <tr id="email">
                     <th id="email">Email:</th>
-                    <td id="edit_email"></td>
+                    <td ><input id="edit_email" type="text" style="border: white"></td>
                   </tr>
                   <tr id="phone">
                     <th id="phone">Phone:</th>
-                    <td id="edit_phone"></td>
+                    <td ><input id="edit_phone" type="text" style="border: white"></td>
                   </tr> 
                   <tr id="provider">
                     <th id="provider">Provider:</th>
-                    <td id="edit_provider"></td>
+                    <td ><input id="edit_provider" type="text" style="border: white"></td>
                   </tr>
                   <tr id="frequency">
                     <th id="freq">Frequency:</th>
-                    <td id="edit_freq"></td>
+                    <td ><input id="edit_freq" type="text" style="border: white"></td>
                   </tr>
                   <tr id="description">
                     <th id="desc">Description:</th>
-                    <td id="edit_desc"></td>
+                    <td ><textarea id="edit_desc" type="text" style="border: white" cols="40"></textarea></td>
                   </tr>
             </table>
+            <hr>
             <b>Site Plan:</b>  <a href="#" id="siteplan" target="_blank"><img src='https://cdn4.iconfinder.com/data/icons/linecon/512/file-512.png' height="25" width="22"></a> <br/><br/>
             <div class="form-group">
                 <label for="MLASelect"><b>MLA OK?:</b></label>
                 <select class="form-control" id="MLASelect" >
                   <option> </option>
                   <option>Yes</option>  
-                  <option>No</option>
                 </select>
               </div>
               <div class="form-group">
@@ -139,7 +136,7 @@
                   <input type="text" class="form-control" id="DTS">
                 </div>
             <div style="padding: 10px 10px 10px 10px;">
-            <button type="button" class="btn btn-danger" id="Btn-delete">Reject</button> <button type="button" class="btn btn-warning" id="Btn-edit">Edit</button> <button type="button" class="btn btn-success" id="Btn-Cartegraph">Approve</button></div>
+            <button type="button" class="btn btn-danger" id="Btn-delete">Reject</button> <button type="button" class="btn btn-warning" id="Btn-edit">Apply Edits</button> <button type="button" class="btn btn-success" id="Btn-Cartegraph">Approve</button></div>
           </div>
         </div>
         </div>
