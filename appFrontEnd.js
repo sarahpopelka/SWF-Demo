@@ -13,6 +13,15 @@ require([
   ], function(Map, MapView, FeatureLayer, UniqueValueRenderer, Query,QueryTask,SpatialReference,Point, Search, Graphic,AttachmentQuery) {
 
     document.getElementById("AppBody").style.visibility='hidden';
+    function reSizeScreen(){
+      var h = document.getElementById("viewDiv").clientHeight;
+      var h80 = h-250;
+      h80string=h80.toString();
+      document.getElementById("appDiv").style.maxHeight=h80string+"px";
+    };
+    
+      reSizeScreen();
+      window.addEventListener("resize",reSizeScreen);
 
   var map = new Map({
     basemap: "streets-navigation-vector"
