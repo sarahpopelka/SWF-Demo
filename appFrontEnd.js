@@ -1,5 +1,6 @@
 require([
     "esri/Map",
+    "esri/Basemap",
     "esri/views/MapView",
     "esri/layers/FeatureLayer",
     "esri/renderers/UniqueValueRenderer",
@@ -10,7 +11,7 @@ require([
     "esri/widgets/Search",
     "esri/Graphic",
     "esri/tasks/support/AttachmentQuery"
-  ], function(Map, MapView, FeatureLayer, UniqueValueRenderer, Query,QueryTask,SpatialReference,Point, Search, Graphic,AttachmentQuery) {
+  ], function(Map, Basemap, MapView, FeatureLayer, UniqueValueRenderer, Query,QueryTask,SpatialReference,Point, Search, Graphic,AttachmentQuery) {
 
     document.getElementById("AppBody").style.visibility='hidden';
     function reSizeScreen(){
@@ -23,15 +24,21 @@ require([
       reSizeScreen();
       window.addEventListener("resize",reSizeScreen);
 
+      var basemap = new Basemap({
+        portalItem: {
+          id: "cb855a7be8d64a2bb84ad5dea7a36d5c"  // WGS84 Streets Vector webmap
+        }
+      });
+
   var map = new Map({
-    basemap: "streets-navigation-vector"
+    basemap: basemap
   });
 
   var view = new MapView({
     container: "viewDiv",
     map: map,
     center: [-77.085453,38.890389], // longitude, latitude
-    zoom: 20
+    zoom: 13
   });
 
   var searchWidget = new Search({
@@ -222,7 +229,7 @@ index: 2
           });
       view.popup.title=document.getElementById("poleSelect").value
       view.popup.content="<p style='font-size:14px'><b>Status:</b> "+status+"<br><b>Height:</b> "+height+"<br><b>Type:</b> "+type+"<br></p>"
-      view.goTo({center:geom, zoom:25});
+      view.goTo({center:geom, zoom:20});
 
       loadingImg.style.visibility = "hidden";
     }
