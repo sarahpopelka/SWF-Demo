@@ -178,6 +178,7 @@ require([
         .then(function(result){
           var url=result[editObj.attributes["OBJECTID"]][0]["url"];
           document.getElementById("siteplan").href=url;
+          console.log(url)
         })
         .catch(rejectedPromise);
 
@@ -244,7 +245,7 @@ function makeAvailable() {
   const edits={updateFeatures:[updateObj]};
   polesLayer
     .applyEdits(edits)
-    //.then(function(editsResult){window.location.replace("SWFPermit - Backend.html")})
+    .then(function(editsResult){window.location.replace("SWFPermit - Backend.html")})
     .catch(function(error) {
         console.log("===============================================");
         console.error(
