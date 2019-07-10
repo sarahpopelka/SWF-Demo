@@ -245,7 +245,7 @@ function makeAvailable() {
   const edits={updateFeatures:[updateObj]};
   polesLayer
     .applyEdits(edits)
-    .then(function(editsResult){window.location.replace("SWFPermit - Backend.html")})
+    .then(function(editsResult){document.location.replace("SWFPermit - Backend.html")})
     .catch(function(error) {
         console.log("===============================================");
         console.error(

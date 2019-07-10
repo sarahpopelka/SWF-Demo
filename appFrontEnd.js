@@ -345,7 +345,8 @@ index: 2
         addfeats.attributes["OBJECTID"]=newOID;
         appsLayer
             .addAttachment(addfeats, formData)
-            .then(function(result){
+            .then(function(result){window.location.replace("success.html")})
+            /*.then(function(result){
               console.log("attachment added");
               var attachQ = new AttachmentQuery({
                 objectIds:[editObj.attributes["OBJECTID"]]
@@ -353,56 +354,10 @@ index: 2
         
               appsLayer
                 .queryAttachments(attachQ)
-                /* .then(function(result){
-                  var url=result[editObj.attributes["OBJECTID"]][0]["url"];
-                  Email.send({
-                    Host : "smtp.gmail.com",
-                    Username : 'swfpermit1',
-                    Password : ,
-                    To : document.getElementById("email").value,
-                    From : 'swfpermit1@gmail.com',
-                    Subject : "Confirmation of Application for Pole #"+document.getElementById("poleSelect").value,
-                    Body : `<link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css'>
-                    <div id='viewDiv' style='border-width: 10px'>
-                            <div style='background-color:#2e8be8; padding: 10px 10px 10px 10px;'><img alt='Arlington County logo' src='https://web1.vermontsystems.com/images/vaarlington/vaarlington/bottom-arlington-logo-2x.png' class='logo' width='140' height='70'></div>
-                            <br/><div><h2 style='color:#717171; font-family:PT Sans, sans-serif; font-weight:700; padding: 10px 10px 10px 10px;'>Thank You for Submitting a Small Cell Facilities Permit Application</h2></div>
-                            <div style='padding: 10px 10px 10px 10px;'>
-                            <h4>Please find the details of your application below.</h4>
-                                <br/>
-                                <div class='table-responsive col-5' style='border:1px solid rgb(44, 44, 44);'>
-                                        <table class= 'table' id='appTable'>
-                                          <tr id='headerrow'>
-                                            <th id='pID'> <h3 style='color:#717171; font-family:PT Sans,sans-serif; font-weight:500'>Pole: ${document.getElementById("poleSelect").value}</h3></th>
-                                          </tr>
-                                          <tr id='name'>
-                                            <th id='FN'>First Name:</th>
-                                            <td id='edit_FN'>${document.getElementById("firstname").value}</td>
-                                          </tr>
-                                          <tr id='lname'>
-                                              <th id='LN'>Last Name:</th>
-                                              <td id='edit_LN'>${document.getElementById("lastname").value}</td>
-                                            </tr>
-                                            <tr id='email'>
-                                                <th id='FN'>Email:</th>
-                                                <td id='edit_email'>${document.getElementById("email").value}</td>
-                                              </tr>
-                                              <tr id='date'>
-                                                  <th id='Date'>Date:</th>
-                                                  <td id='edit_Date'>${objToday}</td>
-                                                </tr>
-                                                </table>
-                                                </div>`
-                                                //Attachments:[
-                                                //  {
-                                                //    name:document.getElementById("poleSelect").value+"_siteplan.pdf",
-                                                //    path:url
-                                               //   }
-                                              //  ]
-                }) */
                 .then(window.location.replace("success.html"))
                 .catch(rejectedPromise);
               
-            })
+            })*/
             
             .catch(function(error) {
               console.log("===============================================");
