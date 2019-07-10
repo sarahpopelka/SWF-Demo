@@ -399,11 +399,10 @@ index: 2
                                                //   }
                                               //  ]
                 }) */
+                .then(window.location.replace("success.html"))
                 .catch(rejectedPromise);
               
             })
-            .then(
-              window.location.replace("success.html"))
             
             .catch(function(error) {
               console.log("===============================================");
