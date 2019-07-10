@@ -217,6 +217,8 @@ index: 2
       cell3.innerHTML = "Type: " + type;
       view.popup.visible=true;
       view.popup.location=geom;
+      view.popup.title=document.getElementById("poleSelect").value;
+      view.popup.content="<span style='font-size:14px; color:#212529' id='popup'><b>Status:</b> "+status+"<br><b>Height:</b> "+height+"<br><b>Type:</b> "+type+"<br></span>";
       view.whenLayerView(polesLayer)
           .then(function(layerView){
       if (highlightSelect) {
@@ -227,8 +229,11 @@ index: 2
                 editObj.attributes["OBJECTID"]
               );
           });
-      view.popup.title=document.getElementById("poleSelect").value
-      view.popup.content="<p style='font-size:14px'><b>Status:</b> "+status+"<br><b>Height:</b> "+height+"<br><b>Type:</b> "+type+"<br></p>"
+      
+      //view.popup.content="<p style='font-size:14px'><b>Status:</b> "+status+"<br><b>Height:</b> "+height+"<br><b>Type:</b> "+type+"<br></p>"
+      console.log("< style='font-size:14px'><b>Status:</b> "+status+"<br><b>Height:</b> "+height+"<br><b>Type:</b> "+type+"<br></p>");
+      
+      
       view.goTo({center:geom, zoom:20});
 
       loadingImg.style.visibility = "hidden";
@@ -256,7 +261,33 @@ index: 2
             );
             console.log("error = ", error);
           });
-        }
+        };
+    
+    function checkform(){
+      formElements=document.getElementsByClassName('form-control');
+      formLen=formElements.length;
+      console.log(formLen);
+      ValidForm=0;
+      for (var i=0; i<formLen; i++){
+            validateField(formElements[i]);
+        };
+        console.log(ValidForm)
+        return new Promise(function(resolve, reject){
+          resolve(ValidForm)
+        })
+      };
+
+      function SUBMIT(){
+        checkform().then(function(result){
+          if (result==0){
+            submitApp()
+          }
+          else{
+            console.log(result);
+            document.getElementById('submit_error').style.visibility="visible"
+          }
+        })
+      }
 
     function submitApp(){
       var objToday = new Date(),
@@ -412,12 +443,11 @@ index: 2
       document.getElementById("plan").style.visibility='hidden';
       document.getElementById("Btn").style.visibility='hidden';
       document.getElementById("mla_status").style.visibility='visible';
-      document.getElementById("mla_status").innerHTML='<b>Invalid MLA number</b>';
     }
     };
 
     document.getElementById("poleSelect").addEventListener("change", doFind); 
-    document.getElementById("Btn").addEventListener("click", submitApp);
+    document.getElementById("Btn").addEventListener("click", SUBMIT);
     document.getElementById("mla").addEventListener("change",checkMLAs)
   });
 
