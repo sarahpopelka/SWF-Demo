@@ -38,7 +38,7 @@ require([
     container: "viewDiv",
     map: map,
     center: [-77.085453,38.890389], // longitude, latitude
-    zoom: 13
+    zoom: 14
   });
 
   var searchWidget = new Search({
@@ -218,7 +218,7 @@ index: 2
       view.popup.visible=true;
       view.popup.location=geom;
       view.popup.title=document.getElementById("poleSelect").value;
-      view.popup.content="<span style='font-size:14px; color:#212529' id='popup'><b>Status:</b> "+status+"<br><b>Height:</b> "+height+"<br><b>Type:</b> "+type+"<br></span>";
+      view.popup.content="<span style='font-size:14px; color:#212529' id='popup'><b>Status:</b> "+status+"<br><b>Height:</b> "+height+"<br><b>Type:</b> "+type+"<br></span> <br/> Please double-click point to select pole in form.";
       view.whenLayerView(polesLayer)
           .then(function(layerView){
       if (highlightSelect) {
@@ -319,6 +319,7 @@ index: 2
         "email":document.getElementById("email").value,
         "provider":document.getElementById("provider").value,
         "frequency":document.getElementById("frequency").value,
+        "elevation":document.getElementById("elevation").value,
         "description":document.getElementById("description").value,
         "dateSubmitted":objToday,
         "MLA_verify":"",

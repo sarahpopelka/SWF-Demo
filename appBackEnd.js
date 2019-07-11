@@ -13,6 +13,7 @@ require([
     var query1 = new Query();
     query1.outFields = ["*"];
     query1.where = "Status = 'Pending'";
+    query1.returnGeometry = true;
 
     var polesLayer = new FeatureLayer({
       url: "https://services9.arcgis.com/9CpmhHxB8FqduRyJ/arcgis/rest/services/Arl_SWF_WFL1/FeatureServer/0"
@@ -68,6 +69,7 @@ require([
       document.getElementById('TEO').value="";
       document.getElementById('MLASelect').value="";
       document.getElementById('DTS').value="";
+      document.getElementById('edit_elev').value="";
       var results = result;
       console.log(results)
       // Clear the cells and rows of the table to make room for new results
@@ -142,6 +144,7 @@ require([
       var TEO = appfeatures[i].attributes["TEO_num"];
       var REAL = appfeatures[i].attributes["MLA_verify"];
       var DTS = appfeatures[i].attributes["handhole"];
+      var Elevation =appfeatures[i].attributes["elevation"];
 
       document.getElementById('edit_pID').innerHTML="Application for Pole: "+pID;
       document.getElementById('edit_MLA').value=mla;
@@ -150,14 +153,16 @@ require([
       document.getElementById('edit_LN').value=lastname;
       document.getElementById('edit_LN').size=lastname.length;
       document.getElementById('edit_co').value=company;
+      document.getElementById('edit_co').size=company.length;
       document.getElementById('edit_add').value=address;
       document.getElementById('edit_add').size=address.length;
       document.getElementById('edit_city').value=city;
       document.getElementById('edit_city').size=city.length;
       document.getElementById('edit_state').value=state;
-      document.getElementById('edit_state').size=state.length;
+      document.getElementById('edit_state').size=2;
       document.getElementById('edit_zip').value=zip;
       document.getElementById('edit_email').value=email;
+      document.getElementById('edit_email').size=email.length;
       document.getElementById('edit_phone').value=phone;
       document.getElementById('edit_provider').value=provider;
       document.getElementById('edit_freq').value=frequency;
@@ -166,8 +171,36 @@ require([
       document.getElementById('TEO').value=TEO;
       document.getElementById('MLASelect').value=REAL;
       document.getElementById('DTS').value=DTS;
+      document.getElementById('edit_elev').value=Elevation;
       
       console.log('click');
+
+      function findHandholes(){
+        var queryTask3 = new QueryTask({
+          url: "https://services9.arcgis.com/9CpmhHxB8FqduRyJ/arcgis/rest/services/Map1/FeatureServer/0"
+        });
+        var query3 = new Query();
+        query3.outFields=["*"];
+        query3.geometry=editObj.geometry;
+        console.log(editObj.geometry);
+        query3.distance=50;
+        query3.returnGeometry=true;
+      
+        queryTask3
+          .execute(query3)
+          .then(function(results){console.log("POLES:"+results.features[0].attributes)})
+          .catch(function(error) {
+            console.log("===============================================");
+            console.error(
+              "[ applyEdits ] FAILURE: ",
+              error.code,
+              error.name,
+              error.message
+            );
+            console.log("error = ", error);})
+      }; 
+
+      findHandholes();
 
       var attachQ = new AttachmentQuery({
         objectIds:[editObj.attributes["OBJECTID"]]
@@ -178,7 +211,7 @@ require([
         .then(function(result){
           var url=result[editObj.attributes["OBJECTID"]][0]["url"];
           document.getElementById("siteplan").href=url;
-          console.log(url)
+          console.log(result)
         })
         .catch(rejectedPromise);
 
@@ -204,6 +237,7 @@ function editApp(){
       editObj.attributes["TEO_num"]=document.getElementById('TEO').value;
       editObj.attributes["MLA_verify"]=document.getElementById('MLASelect').value;
       editObj.attributes["handhole"]=document.getElementById('DTS').value;
+      editObj.attributes["elevation"]=document.getElementById("edit_elev").value;
 
 appsLayer
   .applyEdits({updateFeatures:[editObj]})
@@ -220,6 +254,8 @@ appsLayer
         );
         console.log("error = ", error);})
 };
+
+
 
 function makeAvailable() {
   var queryTask2 = new QueryTask({
