@@ -2,8 +2,9 @@ require([
     "esri/tasks/support/Query",
     "esri/tasks/QueryTask",
     "esri/layers/FeatureLayer",
-    "esri/tasks/support/AttachmentQuery"
-  ], function(Query,QueryTask,FeatureLayer,AttachmentQuery) {
+    "esri/tasks/support/AttachmentQuery",
+    "esri/geometry/Point"
+  ], function(Query,QueryTask,FeatureLayer,AttachmentQuery, Point) {
 
   var queryTask = new QueryTask({
       url:
@@ -68,7 +69,7 @@ require([
       document.getElementById('edit_Date').innerHTML="";
       document.getElementById('TEO').value="";
       document.getElementById('MLASelect').value="";
-      document.getElementById('DTS').value="";
+      document.getElementById('DTS').innerHTML="<option> </option>";
       document.getElementById('edit_elev').value="";
       var results = result;
       console.log(results)
@@ -172,33 +173,12 @@ require([
       document.getElementById('MLASelect').value=REAL;
       document.getElementById('DTS').value=DTS;
       document.getElementById('edit_elev').value=Elevation;
+      document.getElementById('DTS').innerHTML="<option> </option>";
       
       console.log('click');
 
-      function findHandholes(){
-        var queryTask3 = new QueryTask({
-          url: "https://services9.arcgis.com/9CpmhHxB8FqduRyJ/arcgis/rest/services/Map1/FeatureServer/0"
-        });
-        var query3 = new Query();
-        query3.outFields=["*"];
-        query3.geometry=editObj.geometry;
-        console.log(editObj.geometry);
-        query3.distance=50;
-        query3.returnGeometry=true;
-      
-        queryTask3
-          .execute(query3)
-          .then(function(results){console.log("POLES:"+results.features[0].attributes)})
-          .catch(function(error) {
-            console.log("===============================================");
-            console.error(
-              "[ applyEdits ] FAILURE: ",
-              error.code,
-              error.name,
-              error.message
-            );
-            console.log("error = ", error);})
-      }; 
+    // Executes when the promise from find.execute() resolves
+    
 
       findHandholes();
 
@@ -214,9 +194,59 @@ require([
           console.log(result)
         })
         .catch(rejectedPromise);
+    };
+    function findHandholes(){
+      var queryTask3 = new QueryTask({
+        url: "https://services9.arcgis.com/9CpmhHxB8FqduRyJ/arcgis/rest/services/Arl_SWF_WFL1/FeatureServer/1/"
+      });
+      var query3 = new Query();
+      query3.outFields=["*"];
+      query3.geometry=new Point(editObj.geometry);
+      console.log(editObj.geometry);
+      query3.distance=50;
+      query3.units="feet"
+      query3.returnGeometry=true;
+    
+      queryTask3
+        .execute(query3)
+        .then(function(results){showhandholes(results)})
+        .catch(function(error) {
+          console.log("===============================================");
+          console.error(
+            "[ handhole ] FAILURE: ",
+            error.code,
+            error.name,
+            error.message
+          );
+          console.log("error = ", error);})
+    }; 
+    var hhSelector= document.getElementById("DTS");
+    function showhandholes(result) {
+      var results = result;
 
+      // Clear the cells and rows of the table to make room for new results
+      console.log('queryexecuted')
+      var featureLen=results.features.length
+      // If no results are returned from the task, notify the user
+      if (featureLen === 0) {
+        console.log('No Features')
+        return;
+      }
+      else{
+      for (var i=0; i < featureLen; i++){
+      // Loop through each result in the response and add as a row in the table
+      var hh = results.features[i].attributes["poleID"];
 
-    }
+      // Add each resulting value to the table as a row
+      var opt = document.createElement("option");
+
+      opt.value = hh;
+      opt.text=hh
+    
+      hhSelector.add(opt,null)
+    }};};
+
+    
     document.onload=selectPole()
 /////////////////////////////////////////////////////////////////////////////////////////////////
 function editApp(){
