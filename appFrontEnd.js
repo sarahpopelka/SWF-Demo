@@ -77,7 +77,7 @@ index: 2
 
   var popupPoles = {
       "title": "{poleID}",
-      "content": "<b>Status:</b> {Status}<br><b>Height:</b> {Height}<br><b>Type:</b> {Type}<br>"
+      "content": "<b>Status:</b> {Status}<br><b>Height:</b> {Height}<br><b>Type:</b> {Type}<br><br> <span style='font-size:12px'> Please double-click point to select pole in form.<span>"
     }
 
   var polesLayer = new FeatureLayer({
