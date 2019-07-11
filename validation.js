@@ -10,12 +10,12 @@ function validateField(item){
         console.log('empty')
     }
     else if (item.id=="zip"){
-        if (item.value<10000 && item.value>99999){
-            parentDiv.getElementsByTagName("p")[0].style.visibility="visible";
-            ValidForm=ValidForm+1
+        if (item.value.toString().length==5){
+            parentDiv.getElementsByTagName("p")[0].style.visibility="hidden";
         }
         else {
-            parentDiv.getElementsByTagName("p")[0].style.visibility="hidden";
+            parentDiv.getElementsByTagName("p")[0].style.visibility="visible";
+            ValidForm=ValidForm+1
         }
     }
     else if (item.id=="email"){
