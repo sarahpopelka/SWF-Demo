@@ -26,7 +26,7 @@ require([
 
       var basemap = new Basemap({
         portalItem: {
-          id: "cb855a7be8d64a2bb84ad5dea7a36d5c"  // WGS84 Streets Vector webmap
+          id: "cb855a7be8d64a2bb84ad5dea7a36d5c"
         }
       });
 
@@ -37,15 +37,13 @@ require([
   var view = new MapView({
     container: "viewDiv",
     map: map,
-    center: [-77.085453,38.890389], // longitude, latitude
+    center: [-77.085453,38.890389],
     zoom: 14
   });
 
   var searchWidget = new Search({
 view: view
 });
-// Adds the search widget below other elements in
-// the top left corner of the view
 view.ui.add(searchWidget, {
 position: "top-right",
 index: 2
@@ -100,7 +98,6 @@ index: 2
     query1.outFields = ["poleID"]
 
     function selectPole() {
-      // Set the search text to the value of the input box
       query1.where = "Status = 'Available'";
 
       queryTask
@@ -111,45 +108,34 @@ index: 2
 
     var poleSelector= document.getElementById("poleSelect");
 
-    // Executes when the promise from find.execute() resolves
     function showpoleResults(result) {
       var results = result;
-
-      // Clear the cells and rows of the table to make room for new results
       console.log('queryexecuted')
       var featureLen=results.features.length
-      // If no results are returned from the task, notify the user
       if (featureLen === 0) {
         console.log('No Features')
         return;
       }
       else{
       for (var i=0; i < featureLen; i++){
-      // Loop through each result in the response and add as a row in the table
       var pID = results.features[i].attributes["poleID"];
-
-      // Add each resulting value to the table as a row
       var opt = document.createElement("option");
 
       opt.value = pID;
       opt.text=pID
-    
+  
       poleSelector.add(opt,null)
     }};};
 
     document.onload=selectPole()
-/////////////////////////////////////////////////////////////////////////////////////////////////
+
   view.on("double-click",function(){if (view.popup.selectedFeature==null){}
   else{document.getElementById("poleSelect").value=view.popup.selectedFeature.attributes.poleID;
  doFind()}})
 
-
     var loadingImg = document.getElementById("loading");
-
     var editObj
-
     var geom
-    // Set parameters to only query the Counties layer by name
     var query = new Query();
     query.returnGeometry = true;
     query.outFields = ["Height","Status","Type","OBJECTID"]
@@ -158,19 +144,14 @@ index: 2
     var highlightSelect
     view.on("pointer-down",function(){if (highlightSelect){highlightSelect.remove();}});
 
-    // Executes on each button click
     function doFind() {
       if (document.getElementById("poleSelect").value == " "){return}
       else {
       loadingImg.style.visibility = "visible";
-      // Set the search text to the value of the input box
       
       query.where = "poleID = '" + document.getElementById("poleSelect").value + "'";
   
       resultsTable.innerHTML = "";
-      // The execute() performs a LIKE SQL query based on the provided text value
-      // showResults() is called once the promise returned here resolves
-      // find.execute(params).then(showResults, rejectedPromise);
 
       queryTask
         .execute(query)
@@ -180,21 +161,17 @@ index: 2
 
     var resultsTable = document.getElementById("tbl");
 
-    // Executes when the promise from find.execute() resolves
     function showResults(result) {
       var results = result;
 
-      // Clear the cells and rows of the table to make room for new results
       resultsTable.innerHTML = "";
 
-      // If no results are returned from the task, notify the user
       if (results.features.length === 0) {
         resultsTable.innerHTML = "<i>No results found</i>";
         loadingImg.style.visibility = "hidden";
         return;
       }
 
-      // Loop through each result in the response and add as a row in the table
       var height = results.features[0].attributes["Height"];
       var status = results.features[0].attributes["Status"];
       var type = results.features[0].attributes["Type"];
@@ -204,7 +181,6 @@ index: 2
         y:results.features[0].geometry["y"],
         spatialReference: SpatialReference(102100)});
 
-      // Add each resulting value to the table as a row
       var row1 = resultsTable.insertRow(0);
       var cell1 = row1.insertCell(0);
       var row2 = resultsTable.insertRow(1);
@@ -230,7 +206,6 @@ index: 2
               );
           });
       
-      //view.popup.content="<p style='font-size:14px'><b>Status:</b> "+status+"<br><b>Height:</b> "+height+"<br><b>Type:</b> "+type+"<br></p>"
       console.log("< style='font-size:14px'><b>Status:</b> "+status+"<br><b>Height:</b> "+height+"<br><b>Type:</b> "+type+"<br></p>");
       
       
@@ -239,7 +214,6 @@ index: 2
       loadingImg.style.visibility = "hidden";
     }
 
-    // Executes each time the promise from find.execute() is rejected.
     function rejectedPromise(error) {
       console.error("Promise didn't resolve: ", error.message);
       loadingImg.style.visibility = "hidden";
@@ -330,10 +304,6 @@ index: 2
     console.log(attachmentForm);
     const formData= new FormData(attachmentForm);
     formData.append("f","json");
-      //const form = new FormData();
-      //form.set("attachment", file);
-      //form.append("f","json")
-      //var form = document.getElementById("myForm");
 
     makeUnavailable();
     console.log({addFeatures:[addfeats]});
@@ -347,19 +317,6 @@ index: 2
         appsLayer
             .addAttachment(addfeats, formData)
             .then(function(result){window.location.replace("success.html")})
-            /*.then(function(result){
-              console.log("attachment added");
-              var attachQ = new AttachmentQuery({
-                objectIds:[editObj.attributes["OBJECTID"]]
-              });
-        
-              appsLayer
-                .queryAttachments(attachQ)
-                .then(window.location.replace("success.html"))
-                .catch(rejectedPromise);
-              
-            })*/
-            
             .catch(function(error) {
               console.log("===============================================");
               console.error(

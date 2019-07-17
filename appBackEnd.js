@@ -27,7 +27,6 @@ require([
     var csvdata
 
     function selectPole() {
-      // Set the search text to the value of the input box
 
       queryTask
         .execute(query1)
@@ -50,7 +49,6 @@ require([
         return today
     }
 
-    // Executes when the promise from find.execute() resolves
     function showpoleResults(result) {
       document.getElementById('edit_pID').innerHTML="Application for Pole: ";
       document.getElementById('edit_MLA').value="";
@@ -72,11 +70,9 @@ require([
       document.getElementById('DTS').innerHTML="<option> </option>";
       document.getElementById('edit_elev').value="";
       var results = result;
-      console.log(results)
-      // Clear the cells and rows of the table to make room for new results
-      console.log('queryexecuted')
+
       var featureLen=results.features.length
-      // If no results are returned from the task, notify the user
+
       if (featureLen === 0) {
         console.log('No Features')
         return;
@@ -84,17 +80,15 @@ require([
       else{
         appfeatures=results.features
       for (var i=0; i < featureLen; i++){
-      // Loop through each result in the response and add as a row in the table
+
       var pID = results.features[i].attributes["poleID"];
       var firstname = results.features[i].attributes["firstName"];
       var lastname = results.features[i].attributes["lastName"];
       var email = results.features[i].attributes["email"];
       var objToday= formatDate(new Date(results.features[i].attributes["dateSubmitted"]));
         
-      
-
       var poleTab = document.getElementById("poleTable");
-      // Add each resulting value to the table as a row
+
       var row = poleTab.insertRow(-1)
       var col_id=row.insertCell(0);
       var col_fn=row.insertCell(1);
@@ -177,9 +171,6 @@ require([
       
       console.log('click');
 
-    // Executes when the promise from find.execute() resolves
-    
-
       findHandholes();
 
       var attachQ = new AttachmentQuery({
@@ -224,20 +215,18 @@ require([
     function showhandholes(result) {
       var results = result;
 
-      // Clear the cells and rows of the table to make room for new results
       console.log('queryexecuted')
       var featureLen=results.features.length
-      // If no results are returned from the task, notify the user
+
       if (featureLen === 0) {
         console.log('No Features')
         return;
       }
       else{
       for (var i=0; i < featureLen; i++){
-      // Loop through each result in the response and add as a row in the table
+
       var hh = results.features[i].attributes["poleID"];
 
-      // Add each resulting value to the table as a row
       var opt = document.createElement("option");
 
       opt.value = hh;
@@ -246,9 +235,8 @@ require([
       hhSelector.add(opt,null)
     }};};
 
-    
     document.onload=selectPole()
-/////////////////////////////////////////////////////////////////////////////////////////////////
+
 function editApp(){
   console.log("editing");
       editObj.attributes["MLA"]=document.getElementById('edit_MLA').value;
@@ -285,8 +273,6 @@ appsLayer
         console.log("error = ", error);})
 };
 
-
-
 function makeAvailable() {
   var queryTask2 = new QueryTask({
     url:
@@ -295,7 +281,6 @@ function makeAvailable() {
   console.log(pID)
   var query2 = new Query();
     query2.outFields = ["Status","OBJECTID"];
-    // Set the search text to the value of the input box
     query2.where = "poleID = '" + pID + "'";
 
     queryTask2
@@ -376,8 +361,7 @@ function exportToCsv(filename, rows) {
       navigator.msSaveBlob(blob, filename);
   } else {
       var link = document.createElement("a");
-      if (link.download !== undefined) { // feature detection
-          // Browsers that support HTML5 download attribute
+      if (link.download !== undefined) {
           var url = URL.createObjectURL(blob);
           link.setAttribute("href", url);
           link.setAttribute("download", filename);
